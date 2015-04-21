@@ -6,7 +6,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Szevasz Világ!");
-
+		System.out.println("valami");
 	}
 
 }
