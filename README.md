@@ -1,0 +1,2 @@
+# DinamikusH-zak
+Ház
