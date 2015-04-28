@@ -10,7 +10,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		System.out.println("akarmi");
 		System.out.println("Another line");
-		new MainFrame();
+		MainFrame mf = new MainFrame();
 	}
 
 }
