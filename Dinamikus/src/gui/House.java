@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-import controll.AttributeCategory;
+import control.AttributeCategory;
 
 public class House extends JPanel {
 	

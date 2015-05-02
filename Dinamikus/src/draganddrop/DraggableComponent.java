@@ -42,7 +42,7 @@ public class DraggableComponent extends JComponent {
 	 * If sets <b>TRUE</b> when dragging component, it will be painted over each
 	 * other (z-Buffer change)
 	 */
-	protected boolean overbearing = false;
+	protected boolean overbearing = true;
 
 	public DraggableComponent() {
 		addDragListeners();
