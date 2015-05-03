@@ -1,7 +1,10 @@
 package gui;
 
-import javax.swing.BorderFactory;
+import java.awt.Color;
+
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 
 import control.AttributeCategory;
 
@@ -35,8 +38,8 @@ public class AttributeBorder extends JPanel {
 
 		this.attrCategory = attrCategory;
 
-		setBorder(BorderFactory.createLineBorder(attrCategory.getColor(),
-				THICKNESS));
+		setBorder(new CompoundBorder(new LineBorder(Color.black),
+				new LineBorder(attrCategory.getColor(), THICKNESS)));
 	}
 
 }

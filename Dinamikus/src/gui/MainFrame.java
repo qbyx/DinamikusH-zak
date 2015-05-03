@@ -9,29 +9,34 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import control.Attribute;
 import control.AttributeCategory;
 import control.Game;
 
 public class MainFrame extends JFrame {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 6270545319112969177L;
 	private House houses[];
 	private JPanel housePanel;
 	private JPanel actionPanel;
 	private JPanel attributePanel;
-	private AttributeContent attributes[];
+
+	private AttributeContent attributesConents[];
+	int houseCount = 5;
+	int attributeCount = 5;
+	// QQQ
+	private AttributeBorder attributeBorders[];
 
 	public MainFrame() {
-		//
-		int houseCount = 5;
-		int attributeCount = 5;
-		attributes = new AttributeContent[attributeCount * houseCount];
+
+		attributesConents = new AttributeContent[attributeCount * houseCount];
+		attributeBorders = new AttributeBorder[attributeCount * houseCount];
 		Game game = new Game(attributeCount, houseCount);
 
 		setLayout(new BorderLayout());
-		setSize(1200, 600);
+		setSize(1300, 700);
 
 		buildHousePanel(houseCount, game.getAttributeCategories());
 
@@ -39,10 +44,10 @@ public class MainFrame extends JFrame {
 
 		buildAttributePanel();
 
-		dropAttributes(game.getAttributes());
-
 		repaint();
 		setVisible(true);
+
+		dropAttributes(game.getAttributes());
 	}
 
 	public void buildHousePanel(int houseCount,
@@ -56,6 +61,11 @@ public class MainFrame extends JFrame {
 		for (int i = 0; i < houseCount; ++i) {
 			houses[i] = new House(attributeCategories);
 			housePanel.add(houses[i]);
+			// QQQ
+			for (int j = 0; j < attributeCount; ++j) {
+				attributeBorders[i * attributeCount + j] = houses[i]
+						.getBorders()[j];
+			}
 		}
 
 		getContentPane().add(housePanel, BorderLayout.CENTER);
@@ -74,83 +84,23 @@ public class MainFrame extends JFrame {
 		attributePanel = new JPanel(new FlowLayout());
 
 		attributePanel.setBackground(Color.green);
-		attributePanel.setPreferredSize(new Dimension(1, 200));
+		attributePanel.setPreferredSize(new Dimension(1, 300));
 
 		getContentPane().add(attributePanel, BorderLayout.SOUTH);
 	}
 
 	public void dropAttributes(Attribute[] attr) {
 		JPanel glassPanel = (JPanel) getGlassPane();
+		glassPanel.setBorder(new EmptyBorder(400, 0, 0, 0));
 
 		for (int i = 0; i < attr.length; ++i) {
-			attributes[i] = new AttributeContent(attr[i]);
+			attributesConents[i] = new AttributeContent(attr[i],
+					attributeBorders);
 
-			glassPanel.add(attributes[i]);
+			glassPanel.add(attributesConents[i]);
 		}
 
 		glassPanel.setVisible(true);
 	}
 
-	// public void loadPhotos() {
-	// Panel1.removeAll();
-	// for (int i = 1; i <= 10; i++) {
-	// String fileName = String.valueOf(i) + ".jpg";
-	// addNewPhoto(fileName);
-	// }
-	// Panel1.repaint();
-	// }
-	//
-	// public void addNewPhoto(String fileName) {
-	// // Get resources from Directory or Jar file
-	// Image img = Toolkit.getDefaultToolkit().createImage(
-	// "Images/" + fileName);
-	//
-	// // Creates a draggableImageComponent and adds loaded image
-	// DraggableImageComponent photo = new DraggableImageComponent();
-	// Panel1.add(photo);// Adds this component to main container
-	// photo.setImage(img);// Sets image
-	// photo.setAutoSize(true);// The component get ratio w/h of source image
-	// photo.setOverbearing(true);// On click ,this panel gains lowest z-buffer
-	// photo.setBorder(new LineBorder(Color.black, 1));
-	//
-	// // A small randomization of object size/position
-	// photo.setSize(100, 100);
-	// Point p = getRandomPoint((int) (Width
-	// - Panel2.getPreferredSize().getWidth() - photo.getSize()
-	// .getWidth()), (int) (Height / 2 - photo.getSize().getHeight()));
-	// // p.y += Height / 2;
-	// photo.setLocation(p);
-	//
-	// // img = Toolkit.getDefaultToolkit().createImage(
-	// // "Images/" + "haz.jpg");
-	// // photo = new DraggableImageComponent();
-	// // Panel1.add(photo);// Adds this component to main container
-	// // photo.setImage(img);// Sets image
-	// // photo.setAutoSize(true);// The component get ratio w/h of source image
-	// // photo.setOverbearing(true);// On click ,this panel gains lowest
-	// z-buffer
-	// // photo.setBorder(new LineBorder(Color.black, 1));
-	// // photo.setSize(360, 360);
-	// // photo.setLocation(40, 40);
-	// // photo.setDraggable(false);
-	// Panel1.repaint();
-	// }
-	//
-	// public static int getRandom(int range) {
-	// int r = (int) (Math.random() * range) - range;
-	// return r;
-	// }
-	//
-	// public static Point getRandomPoint(int MaxWidth, int MaxHeight) {
-	// Point p = new Point();
-	// p.x = (int) (Math.random() * MaxWidth);
-	// p.y = (int) (Math.random() * MaxHeight);
-	// return p;
-	// }
-	//
-	// WindowListener listener = new WindowAdapter() {
-	// public void windowClosing(WindowEvent we) {
-	// System.exit(0);
-	// }
-	// };
 }

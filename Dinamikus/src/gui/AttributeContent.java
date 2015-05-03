@@ -11,6 +11,8 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 
 import control.Attribute;
 
@@ -18,6 +20,13 @@ public class AttributeContent extends JPanel {
 
 	private static final long serialVersionUID = 3803164464624865777L;
 	private Attribute attr;
+	private boolean draggable = true;
+	protected Point anchorPoint;
+	protected Cursor draggingCursor = Cursor
+			.getPredefinedCursor(Cursor.HAND_CURSOR);
+
+	// QQQ SHORTCUT
+	private AttributeBorder attributeBorders[];
 
 	public Attribute getAttr() {
 		return attr;
@@ -27,12 +36,19 @@ public class AttributeContent extends JPanel {
 		this.attr = attr;
 	}
 
-	public AttributeContent(Attribute attr) {
+	public AttributeContent(Attribute attr, AttributeBorder[] attributeBorders) {
+		this.attributeBorders = attributeBorders;
+
+		setBorder(new CompoundBorder(new LineBorder(Color.black),
+				new LineBorder(Color.red, 4)));
+
+		// copy
 		add(new JLabel(attr.getName()));
 		setBackground(Color.green);
 		setBackground(attr.getAttributeCategory().getColor());
 
-		setPreferredSize(new Dimension(100, 100));
+		setPreferredSize(new Dimension(attributeBorders[0].getWidth(),
+				attributeBorders[0].getHeight()));
 
 		this.attr = attr;
 		// TRY
@@ -42,55 +58,18 @@ public class AttributeContent extends JPanel {
 		repaint();
 	}
 
-	// @Override
-	// public void paintComponent(Graphics g) {
-	// super.paintComponent(g);
-	// System.out.print("asdf");
-	// }
-	// / <<< TRY >>>> ///
-
-	/** If sets <b>TRUE</b> this component is draggable */
-	private boolean draggable = true;
-	/**
-	 * 2D Point representing the coordinate where mouse is, relative parent
-	 * container
-	 */
-	protected Point anchorPoint;
-	/** Default mouse cursor for dragging action */
-	protected Cursor draggingCursor = Cursor
-			.getPredefinedCursor(Cursor.HAND_CURSOR);
-	/**
-	 * If sets <b>TRUE</b> when dragging component, it will be painted over each
-	 * other (z-Buffer change)
-	 */
-	protected boolean overbearing = true;
-
-	/**
-	 * We have to define this method because a JComponent is a void box. So we
-	 * have to define how it will be painted. We create a simple filled
-	 * rectangle.
-	 *
-	 * @param g
-	 *            Graphics object as canvas
-	 */
 	@Override
 	protected void paintComponent(Graphics g) {
+		setSize(new Dimension(attributeBorders[0].getWidth(),
+				attributeBorders[0].getHeight()));
+		setPreferredSize(new Dimension(attributeBorders[0].getWidth(),
+				attributeBorders[0].getHeight()));
+		setBackground(attr.getAttributeCategory().getColor());
+
 		super.paintComponent(g);
-		if (isOpaque()) {
-			g.setColor(attr.getAttributeCategory().getColor());
-			g.fillRect(0, 0, getWidth(), getHeight());
-		}
 	}
 
-	/**
-	 * Add Mouse Motion Listener with drag function
-	 */
 	private void addDragListeners() {
-		/**
-		 * This handle is a reference to THIS beacause in next Mouse Adapter
-		 * "this" is not allowed
-		 */
-		final AttributeContent handle = this;
 		addMouseMotionListener(new MouseAdapter() {
 
 			@Override
@@ -118,18 +97,31 @@ public class AttributeContent extends JPanel {
 					setLocation(new Point(50, 50));
 				}
 
-				// Change Z-Buffer if it is "overbearing"
-				if (overbearing) {
-					getParent().setComponentZOrder(handle, 0);
-					repaint();
+				for (AttributeBorder ab : attributeBorders) {
+					if (e.getXOnScreen() < ab.getLocationOnScreen().getX()
+							|| e.getXOnScreen() > ab.getLocationOnScreen()
+									.getX() + ab.getWidth()
+							|| e.getYOnScreen() < ab.getLocationOnScreen()
+									.getY()
+							|| e.getYOnScreen() > ab.getLocationOnScreen()
+									.getY() + ab.getHeight()) {
+						// System.out.println("out");
+					} else {
+						// System.out.println("(" +
+						// ab.getLocationOnScreen().getX() + ", " +
+						// ab.getLocationOnScreen().getY() + ") << ("
+						// + e.getXOnScreen() + ", " + e.getYOnScreen() + ")");
+						setLocation(
+								(int) (ab.getLocationOnScreen().getX() - getParent()
+										.getLocationOnScreen().getX()),
+								(int) (ab.getLocationOnScreen().getY() - getParent()
+										.getLocationOnScreen().getY()));
+					}
 				}
 			}
 		});
 	}
 
-	/**
-	 * Remove all Mouse Motion Listener. Freeze component.
-	 */
 	private void removeDragListeners() {
 		for (MouseMotionListener listener : this.getMouseMotionListeners()) {
 			removeMouseMotionListener(listener);
@@ -137,21 +129,10 @@ public class AttributeContent extends JPanel {
 		setCursor(Cursor.getDefaultCursor());
 	}
 
-	/**
-	 * Get the value of draggable
-	 *
-	 * @return the value of draggable
-	 */
 	public boolean isDraggable() {
 		return draggable;
 	}
 
-	/**
-	 * Set the value of draggable
-	 *
-	 * @param draggable
-	 *            new value of draggable
-	 */
 	public void setDraggable(boolean draggable) {
 		this.draggable = draggable;
 		if (draggable) {
@@ -159,44 +140,14 @@ public class AttributeContent extends JPanel {
 		} else {
 			removeDragListeners();
 		}
-
 	}
 
-	/**
-	 * Get the value of draggingCursor
-	 *
-	 * @return the value of draggingCursor
-	 */
 	public Cursor getDraggingCursor() {
 		return draggingCursor;
 	}
 
-	/**
-	 * Set the value of draggingCursor
-	 *
-	 * @param draggingCursor
-	 *            new value of draggingCursor
-	 */
 	public void setDraggingCursor(Cursor draggingCursor) {
 		this.draggingCursor = draggingCursor;
 	}
 
-	/**
-	 * Get the value of overbearing
-	 *
-	 * @return the value of overbearing
-	 */
-	public boolean isOverbearing() {
-		return overbearing;
-	}
-
-	/**
-	 * Set the value of overbearing
-	 *
-	 * @param overbearing
-	 *            new value of overbearing
-	 */
-	public void setOverbearing(boolean overbearing) {
-		this.overbearing = overbearing;
-	}
 }
