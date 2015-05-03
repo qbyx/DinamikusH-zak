@@ -40,7 +40,7 @@ public class AttributeContent extends JPanel {
 		this.attributeBorders = attributeBorders;
 
 		setBorder(new CompoundBorder(new LineBorder(Color.black),
-				new LineBorder(Color.red, 4)));
+				new LineBorder(attr.getAttributeCategory().getColor(), 4)));
 
 		// copy
 		add(new JLabel(attr.getName()));
@@ -64,7 +64,7 @@ public class AttributeContent extends JPanel {
 				attributeBorders[0].getHeight()));
 		setPreferredSize(new Dimension(attributeBorders[0].getWidth(),
 				attributeBorders[0].getHeight()));
-		setBackground(attr.getAttributeCategory().getColor());
+		setBackground(Color.white);
 
 		super.paintComponent(g);
 	}

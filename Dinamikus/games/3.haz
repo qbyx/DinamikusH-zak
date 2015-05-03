@@ -1,0 +1,14 @@
+4
+3
+Nemeztiség Dán Angol Svéd
+Ital Kakaó Tea Tej
+Szín Kék Piros Zöld
+Állat Kutya Kecske Hal
+Dán = Tea
+Kutya = 2
+Tej = 1
+Zold !1 Kek 
+Zold !-1 Kek
+Zold 1 Angol || Zold -1 Angol
+Kecske = Kek
+Kek != Tej 
