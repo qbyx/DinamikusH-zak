@@ -14,13 +14,14 @@ public class Game {
 	private String[][] gameData;
 
 	public Game(int attributeCount, int houseCount, GameLoader gameLoader) {
+		this.gameLoader = gameLoader;
 		this.attributeCount = attributeCount;
 		this.houseCount = houseCount;
 
 		attributes = new Attribute[attributeCount * houseCount];
 		attributeCategories = new AttributeCategory[attributeCount];
 
-		gameData = gameLoader.getCat();
+		gameData = gameLoader.getAttributes();
 		Color[] gameColors = { Color.yellow, Color.red, Color.black,
 				Color.cyan, Color.blue, Color.lightGray, Color.magenta,
 				Color.orange };
@@ -28,47 +29,13 @@ public class Game {
 		for (int i = 0; i < gameData.length; i++) {
 			attributeCategories[i] = new AttributeCategory(gameData[i][0],
 					gameColors[i]);
-			for (int j = 0; j < gameData[0].length - 1; j++) {
-				attributes[i * (gameData[i].length - 1) + j] = new Attribute(
-						gameData[i][j + 1], attributeCategories[i]);
-				System.out.println(i * gameData[i].length + j);
+			for (int j = 0; j < gameData[0].length; j++) {
+				attributes[i * (gameData[i].length) + j] = new Attribute(
+						gameData[i][j], attributeCategories[i]);
+				System.out.println(i * gameData[i].length);
 			}
 			System.out.println();
 		}
-		// attributeCategories[0] = new AttributeCategory("asdf", Color.yellow);
-		// attributeCategories[1] = new AttributeCategory("asdf", Color.red);
-		// attributeCategories[2] = new AttributeCategory("asdf", Color.black);
-		// attributeCategories[3] = new AttributeCategory("asdf", Color.cyan);
-		// attributeCategories[4] = new AttributeCategory("asdf", Color.blue);
-
-		// harqoded
-		// 1
-
-		// attributes[0] = new Attribute("somename", attributeCategories[0]);
-		// attributes[1] = new Attribute("somename", attributeCategories[0]);
-		// attributes[2] = new Attribute("somename", attributeCategories[0]);
-		// attributes[3] = new Attribute("somename", attributeCategories[0]);
-		// attributes[4] = new Attribute("somename", attributeCategories[0]);
-		// attributes[5] = new Attribute("somename", attributeCategories[1]);
-		// attributes[6] = new Attribute("somename", attributeCategories[1]);
-		// attributes[7] = new Attribute("somename", attributeCategories[1]);
-		// attributes[8] = new Attribute("somename", attributeCategories[1]);
-		// attributes[9] = new Attribute("somename", attributeCategories[1]);
-		// attributes[10] = new Attribute("somename", attributeCategories[2]);
-		// attributes[11] = new Attribute("somename", attributeCategories[2]);
-		// attributes[12] = new Attribute("somename", attributeCategories[2]);
-		// attributes[13] = new Attribute("somename", attributeCategories[2]);
-		// attributes[14] = new Attribute("somename", attributeCategories[2]);
-		// attributes[15] = new Attribute("somename", attributeCategories[3]);
-		// attributes[16] = new Attribute("somename", attributeCategories[3]);
-		// attributes[17] = new Attribute("somename", attributeCategories[3]);
-		// attributes[18] = new Attribute("somename", attributeCategories[3]);
-		// attributes[19] = new Attribute("somename", attributeCategories[3]);
-		// attributes[20] = new Attribute("somename", attributeCategories[4]);
-		// attributes[21] = new Attribute("somename", attributeCategories[4]);
-		// attributes[22] = new Attribute("somename", attributeCategories[4]);
-		// attributes[23] = new Attribute("somename", attributeCategories[4]);
-		// attributes[24] = new Attribute("somename", attributeCategories[4]);
 	}
 
 	public int getAttributeCount() {
