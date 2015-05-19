@@ -3,17 +3,21 @@ package gui;
 import io.GameLoader;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,14 +28,20 @@ import javax.swing.border.EmptyBorder;
 import control.Attribute;
 import control.AttributeCategory;
 import control.Game;
+import control.GameState;
 
 public class MainFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 6270545319112969177L;
-	private House houses[];
+
+	private HouseContent houses[];
+	// main panels
 	private JPanel housePanel;
 	private JPanel actionPanel;
 	private JPanel attributePanel;
+	
+	// game state
+	private GameState gs;
 
 	private JMenu fileMenu;
 	private JMenu gamesMenu;
@@ -43,6 +53,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private GameLoader gameLoader;
 	private CustomGame customGame;
+	// temp
 	private MainFrame mainFrame;
 
 	private AttributeContent attributesConents[];
@@ -58,8 +69,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		attributesConents = new AttributeContent[attributeCount * houseCount];
 		attributeBorders = new AttributeBorder[attributeCount * houseCount];
-		Game game = new Game(attributeCount, houseCount, gameLoader);
-
+		Game game = new Game(attributeCount, houseCount, gameLoader, null);
+		
+		gs = new GameState(game);
+		
 		setLayout(new BorderLayout());
 		setSize(1300, 700);
 
@@ -86,9 +99,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		housePanel.setBackground(Color.darkGray);
 		housePanel.setBorder(BorderFactory.createEmptyBorder());
 
-		houses = new House[houseCount];
+		houses = new HouseContent[houseCount];
 		for (int i = 0; i < houseCount; ++i) {
-			houses[i] = new House(attributeCategories);
+			houses[i] = new HouseContent(attributeCategories, i);
 			housePanel.add(houses[i]);
 			// QQQ
 			for (int j = 0; j < attributeCount; ++j) {
@@ -101,10 +114,21 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	public void buildActionPanel() {
-		actionPanel = new JPanel(null);
+		actionPanel = new JPanel(new FlowLayout());
 
 		actionPanel.setBackground(Color.RED);
 		actionPanel.setPreferredSize(new Dimension(200, 1));
+		
+		// temp
+		JButton b = new JButton("ev");
+		b.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent me) {
+				System.out.println("Evaluate: ...");
+				gs.Evaluate();
+			}
+		});
+		actionPanel.add(b);
 
 		getContentPane().add(actionPanel, BorderLayout.EAST);
 	}
@@ -125,6 +149,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		for (int i = 0; i < attr.length; ++i) {
 			attributesConents[i] = new AttributeContent(attr[i],
 					attributeBorders);
+			
+			attributesConents[i].setGs(gs);
 
 			glassPanel.add(attributesConents[i]);
 		}

@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import control.AttributeCategory;
 
-public class House extends JPanel {
+public class HouseContent extends JPanel {
 	
 	private static final long serialVersionUID = -7422863894753507568L;
 	static final private int PADDING = 10;
@@ -18,6 +18,7 @@ public class House extends JPanel {
 	static final private int GAP_SIZE = 8;
 	
 	private AttributeBorder borders[];
+	int houseIndex;
 	
 	public AttributeBorder[] getBorders() {
 		return borders;
@@ -27,8 +28,10 @@ public class House extends JPanel {
 		this.borders = borders;
 	}
 
-	public House(AttributeCategory attrCategories[]) {
+	public HouseContent(AttributeCategory attrCategories[], int houseIndex) {
 		super(new GridLayout(((attrCategories.length - 1) / 2) + 1, 2, GAP_SIZE, GAP_SIZE));
+		
+		this.houseIndex = houseIndex;
 		
 		setBorder(new CompoundBorder(
 				BorderFactory.createLineBorder(Color.black, BOARDER_THICKNESS),
@@ -37,7 +40,8 @@ public class House extends JPanel {
 		
 		borders = new AttributeBorder[attrCategories.length];
 		for (int i = 0; i < attrCategories.length; ++i) {
-			borders[i] = new AttributeBorder(attrCategories[i]);
+			borders[i] = new AttributeBorder(attrCategories[i], this.houseIndex);
+			System.out.println("houseindex: " + houseIndex);
 			add(borders[i]);
 		}
 	}

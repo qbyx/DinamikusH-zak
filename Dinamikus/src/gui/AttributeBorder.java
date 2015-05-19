@@ -16,6 +16,7 @@ public class AttributeBorder extends JPanel {
 
 	private AttributeContent attrContent;
 	private AttributeCategory attrCategory;
+	private int houseIndex;
 
 	public AttributeCategory getAttrCategory() {
 		return attrCategory;
@@ -33,13 +34,22 @@ public class AttributeBorder extends JPanel {
 		this.attrContent = attrContent;
 	}
 
-	public AttributeBorder(AttributeCategory attrCategory) {
+	public int getHouseIndex() {
+		return houseIndex;
+	}
+
+	public void setHouseIndex(int houseIndex) {
+		this.houseIndex = houseIndex;
+	}
+
+	public AttributeBorder(AttributeCategory attrCategory, int houseIndex) {
 		super(null);
 
 		this.attrCategory = attrCategory;
+		this.houseIndex = houseIndex;
 
 		setBorder(new CompoundBorder(new LineBorder(Color.black),
 				new LineBorder(attrCategory.getColor(), THICKNESS)));
 	}
-
+	
 }

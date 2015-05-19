@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
 import control.Attribute;
+import control.GameState;
 
 public class AttributeContent extends JPanel {
 
@@ -27,6 +29,9 @@ public class AttributeContent extends JPanel {
 
 	// QQQ SHORTCUT
 	private AttributeBorder attributeBorders[];
+	private GameState gs;
+	private int hiPlaced;
+	private int catiPlaced;
 
 	public Attribute getAttr() {
 		return attr;
@@ -51,6 +56,8 @@ public class AttributeContent extends JPanel {
 				attributeBorders[0].getHeight()));
 
 		this.attr = attr;
+		hiPlaced = -1;
+		catiPlaced = -1;
 		// TRY
 		addDragListeners();
 		setOpaque(true);
@@ -71,7 +78,6 @@ public class AttributeContent extends JPanel {
 
 	private void addDragListeners() {
 		addMouseMotionListener(new MouseAdapter() {
-
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				anchorPoint = e.getPoint();
@@ -111,11 +117,45 @@ public class AttributeContent extends JPanel {
 						// ab.getLocationOnScreen().getX() + ", " +
 						// ab.getLocationOnScreen().getY() + ") << ("
 						// + e.getXOnScreen() + ", " + e.getYOnScreen() + ")");
-						setLocation(
-								(int) (ab.getLocationOnScreen().getX() - getParent()
-										.getLocationOnScreen().getX()),
-								(int) (ab.getLocationOnScreen().getY() - getParent()
-										.getLocationOnScreen().getY()));
+						if (ab.getAttrCategory() == attr.getAttributeCategory()) {
+							setLocation(
+									(int) (ab.getLocationOnScreen().getX() - getParent()
+											.getLocationOnScreen().getX()),
+									(int) (ab.getLocationOnScreen().getY() - getParent()
+											.getLocationOnScreen().getY()));
+						}
+					}
+				}
+			}
+
+		});
+
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				for (AttributeBorder ab : attributeBorders) {
+					if (e.getXOnScreen() < ab.getLocationOnScreen().getX()
+							|| e.getXOnScreen() > ab.getLocationOnScreen()
+									.getX() + ab.getWidth()
+							|| e.getYOnScreen() < ab.getLocationOnScreen()
+									.getY()
+							|| e.getYOnScreen() > ab.getLocationOnScreen()
+									.getY() + ab.getHeight()) {
+						if (hiPlaced != -1 && catiPlaced != -1) {
+							gs.ClearAttribute(hiPlaced, catiPlaced);
+							// System.out.println("removed");
+							hiPlaced = -1;
+							catiPlaced = -1;
+						}
+					} else {
+						if (ab.getAttrCategory() == attr.getAttributeCategory()) {
+							getGs().setAttributeAt(ab.getHouseIndex(), attr);
+							// System.out.println("this bai: "
+							// + ab.getHouseIndex());
+							hiPlaced = ab.getHouseIndex();
+							catiPlaced = attr.getAttributeCategory().getIndex();
+							return;
+						}
 					}
 				}
 			}
@@ -125,6 +165,9 @@ public class AttributeContent extends JPanel {
 	private void removeDragListeners() {
 		for (MouseMotionListener listener : this.getMouseMotionListeners()) {
 			removeMouseMotionListener(listener);
+		}
+		for (MouseListener listener : this.getMouseListeners()) {
+			removeMouseListener(listener);
 		}
 		setCursor(Cursor.getDefaultCursor());
 	}
@@ -148,6 +191,14 @@ public class AttributeContent extends JPanel {
 
 	public void setDraggingCursor(Cursor draggingCursor) {
 		this.draggingCursor = draggingCursor;
+	}
+
+	public GameState getGs() {
+		return gs;
+	}
+
+	public void setGs(GameState gs) {
+		this.gs = gs;
 	}
 
 }
