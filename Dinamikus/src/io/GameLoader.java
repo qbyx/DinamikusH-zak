@@ -11,6 +11,8 @@ public class GameLoader {
 	private String cat[][];
 	private String categorys[];
 	private String[][] attributes;
+	private String[][] constrains;
+	private int constrainsNumber;
 
 	public GameLoader() {
 	}
@@ -62,10 +64,16 @@ public class GameLoader {
 			br = new BufferedReader(new FileReader(fileName));
 			catNumber = Integer.parseInt(br.readLine());
 			houseNumber = Integer.parseInt(br.readLine());
+			constrainsNumber = Integer.parseInt(br.readLine());
 			cat = new String[catNumber][houseNumber + 1];
 			for (int i = 0; i < catNumber; i++) {
 				sCurrentLine = br.readLine();
 				cat[i] = sCurrentLine.split(" ");
+			}
+			constrains = new String[constrainsNumber][3];
+			for (int i = 0; i < constrainsNumber; i++) {
+				sCurrentLine = br.readLine();
+				constrains[i] = sCurrentLine.split(" ");
 			}
 			// while ((sCurrentLine = br.readLine()) != null) {
 			// cat[i] = sCurrentLine.split(" ");
@@ -90,14 +98,28 @@ public class GameLoader {
 			}
 		}
 
-		for (int i = 0; i < catNumber; i++) {
-			System.out.println();
-			System.out.println(categorys[i]);
-			System.out.println();
-			for (int j = 0; j < houseNumber; j++) {
-				System.out.println(attributes[i][j]);
-			}
-		}
+		// for (int i = 0; i < contrainsNumber; i++) {
+		// System.out.println();
+		// for (int j = 0; j < 3; j++) {
+		// System.out.print(contrains[i][j]+" ");
+		// }
+		// }
+	}
+
+	public String[][] getConstrains() {
+		return constrains;
+	}
+
+	public void setConstrains(String[][] constrains) {
+		this.constrains = constrains;
+	}
+
+	public int getConstrainsNumber() {
+		return constrainsNumber;
+	}
+
+	public void setConstrainsNumber(int constrainsNumber) {
+		this.constrainsNumber = constrainsNumber;
 	}
 
 	public String[] getCategorys() {

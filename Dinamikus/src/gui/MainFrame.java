@@ -39,7 +39,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JPanel housePanel;
 	private JPanel actionPanel;
 	private JPanel attributePanel;
-	
+
 	// game state
 	private GameState gs;
 
@@ -57,8 +57,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	private MainFrame mainFrame;
 
 	private AttributeContent attributesConents[];
-	int houseCount = 3;
-	int attributeCount = 4;
+	private int houseCount = 3;
+	private int attributeCount = 4;
 	// QQQ
 	private AttributeBorder attributeBorders[];
 
@@ -66,15 +66,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		mainFrame = this;
 		gameLoader = new GameLoader();
 		gameLoader.setGame(houseCount);
+//		attributeCount = gameLoader.getCatNumber();
 
 		attributesConents = new AttributeContent[attributeCount * houseCount];
 		attributeBorders = new AttributeBorder[attributeCount * houseCount];
 		Game game = new Game(attributeCount, houseCount, gameLoader, null);
-		
+
 		gs = new GameState(game);
-		
+
 		setLayout(new BorderLayout());
 		setSize(1300, 700);
+		setResizable(false);
 
 		buildHousePanel(houseCount, game.getAttributeCategories());
 
@@ -118,7 +120,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		actionPanel.setBackground(Color.RED);
 		actionPanel.setPreferredSize(new Dimension(200, 1));
-		
+
 		// temp
 		JButton b = new JButton("ev");
 		b.addMouseListener(new MouseAdapter() {
@@ -149,7 +151,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		for (int i = 0; i < attr.length; ++i) {
 			attributesConents[i] = new AttributeContent(attr[i],
 					attributeBorders);
-			
+
 			attributesConents[i].setGs(gs);
 
 			glassPanel.add(attributesConents[i]);

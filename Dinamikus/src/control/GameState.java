@@ -16,7 +16,7 @@ public class GameState {
 	public void setAttributeAt(int houseIndex, Attribute attr) {
 		houses[houseIndex][attr.getAttributeCategory().getIndex()] = attr;
 		System.out.println("set: " + houseIndex + ", "
-				+ attr.getAttributeCategory().getIndex());
+				+ attr.getAttributeCategory().getName());
 	}
 	
 	public Attribute getAttributeAt(int houseIndex, AttributeCategory attrCat) {

@@ -11,11 +11,11 @@ public class Equals extends Constrain {
 		int firstIndex = gs.getHouseIndex(firstAttr);
 		int secondIndex = gs.getHouseIndex(secondAttr);
 
-		//System.out.println(firstIndex + " --- " + secondIndex);
+		// System.out.println(firstIndex + " --- " + secondIndex);
 		if (firstIndex == -1 && secondIndex == -1) {
 			return Constrain.Verdict.UNKNOWN;
 		} else if (secondIndex == -1) {
-			//System.out.println("no second");
+			// System.out.println("no second");
 			Attribute other = gs.getAttributeAt(firstIndex,
 					secondAttr.getAttributeCategory());
 			if (other != null) {
@@ -24,7 +24,7 @@ public class Equals extends Constrain {
 				return Constrain.Verdict.UNKNOWN;
 			}
 		} else if (firstIndex == -1) {
-			//System.out.println("no first");
+			// System.out.println("no first");
 			Attribute other = gs.getAttributeAt(secondIndex,
 					firstAttr.getAttributeCategory());
 			if (other != null) {

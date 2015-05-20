@@ -1,5 +1,6 @@
 4
 3
+7
 Nemeztiség Dán Angol Svéd
 Ital Kakaó Tea Tej
 Szín Kék Piros Zöld
@@ -7,8 +8,7 @@ Szín Kék Piros Zöld
 Dán = Tea
 Kutya = 2
 Tej = 1
-Zold !1 Kek 
-Zold !-1 Kek
-Zold 1 Angol || Zold -1 Angol
+Zold !<> Kek
+Zold <> Angol
 Kecske = Kek
-Kek != Tej 
+Kek != Tej
