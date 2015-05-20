@@ -1,5 +1,6 @@
 package control;
 
+import gui.MainFrame;
 import io.GameLoader;
 
 import java.awt.Color;
@@ -17,11 +18,10 @@ public class Game {
 	private String[][] constrainsList;
 	private int constrainsNumber;
 
-	public Game(int attributeCount, int houseCount, GameLoader gameLoader,
-			Constrain[] constrains) {
-		this.gameLoader = gameLoader;
-		this.attributeCount = attributeCount;
-		this.houseCount = houseCount;
+	public Game(MainFrame mainFrame) {
+		gameLoader = mainFrame.getGameLoader();
+		attributeCount = mainFrame.getAttributeCount();
+		houseCount = mainFrame.getHouseCount();
 
 		attributes = new Attribute[attributeCount * houseCount];
 		attributeCategories = new AttributeCategory[attributeCount];
@@ -40,7 +40,7 @@ public class Game {
 			for (int j = 0; j < gameData[0].length; j++) {
 				attributes[i * (gameData[i].length) + j] = new Attribute(
 						gameData[i][j], attributeCategories[i]);
-				System.out.println(i * gameData[i].length);
+				// System.out.println(i * gameData[i].length);
 			}
 			System.out.println();
 		}
@@ -86,21 +86,6 @@ public class Game {
 				break;
 			}
 		}
-
-		// this.constrains[0] = new Equals(getAttributeByName("Dán"),
-		// getAttributeByName("Tea"));
-		// this.constrains[1] = new MiddlePosition(getAttributeByName("Kutya"));
-		// // this.constrains[1] = new Positional(getAttributeByName("Kutya"),
-		// 1);
-		// this.constrains[2] = new Positional(getAttributeByName("Tej"), 0);
-		// this.constrains[3] = new Negate(new Neighbor(
-		// getAttributeByName("Zöld"), getAttributeByName("Kék")));
-		// this.constrains[4] = new Neighbor(getAttributeByName("Zöld"),
-		// getAttributeByName("Angol"));
-		// this.constrains[5] = new Equals(getAttributeByName("Kecske"),
-		// getAttributeByName("Kék"));
-		// this.constrains[6] = new Negate(new Equals(getAttributeByName("Kék"),
-		// getAttributeByName("Tej")));
 	}
 
 	public Constrain[] getConstrains() {

@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.StreamCorruptedException;
 
 public class GameLoader {
-	private int catNumber;
-	private int houseNumber;
+	private int attributeCount;
+	private int houseCount;
 	private String cat[][];
 	private String categorys[];
 	private String[][] attributes;
@@ -21,20 +21,20 @@ public class GameLoader {
 		Game(game);
 	}
 
-	public int getHouseNumber() {
-		return catNumber;
+	public int getAttributeCount() {
+		return attributeCount;
 	}
 
-	public void setHouseNumber(int houseNumber) {
-		this.catNumber = houseNumber;
+	public void setAttributeCount(int attributeCount) {
+		this.attributeCount = attributeCount;
 	}
 
-	public int getCatNumber() {
-		return houseNumber;
+	public int getHouseCount() {
+		return houseCount;
 	}
 
-	public void setCatNumber(int catNumber) {
-		this.houseNumber = catNumber;
+	public void setHouseCount(int houseCount) {
+		this.houseCount = houseCount;
 	}
 
 	public void Game(int game) {
@@ -62,11 +62,11 @@ public class GameLoader {
 		try {
 			String sCurrentLine;
 			br = new BufferedReader(new FileReader(fileName));
-			catNumber = Integer.parseInt(br.readLine());
-			houseNumber = Integer.parseInt(br.readLine());
+			attributeCount = Integer.parseInt(br.readLine());
+			houseCount = Integer.parseInt(br.readLine());
 			constrainsNumber = Integer.parseInt(br.readLine());
-			cat = new String[catNumber][houseNumber + 1];
-			for (int i = 0; i < catNumber; i++) {
+			cat = new String[attributeCount][houseCount + 1];
+			for (int i = 0; i < attributeCount; i++) {
 				sCurrentLine = br.readLine();
 				cat[i] = sCurrentLine.split(" ");
 			}
@@ -89,11 +89,11 @@ public class GameLoader {
 				ex.printStackTrace();
 			}
 		}
-		attributes = new String[catNumber][houseNumber];
-		categorys = new String[catNumber];
-		for (int i = 0; i < catNumber; i++) {
+		attributes = new String[attributeCount][houseCount];
+		categorys = new String[attributeCount];
+		for (int i = 0; i < attributeCount; i++) {
 			categorys[i] = cat[i][0];
-			for (int j = 1; j <= houseNumber; j++) {
+			for (int j = 1; j <= houseCount; j++) {
 				attributes[i][j - 1] = cat[i][j];
 			}
 		}

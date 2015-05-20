@@ -1,15 +1,23 @@
 package control;
 
+import gui.MainFrame;
+import io.GameLoader;
+
 public class GameState {
 
 	final private Game game;
 
-	Attribute houses[][];
+	private Attribute houses[][];
+	private GameLoader gameLoader;
+	private MainFrame mainFrame;
+	private String[][] constrainsList;
 
-	public GameState(Game game) {
+	public GameState(MainFrame mainFrame) {
 		super();
-		this.game = game;
-
+		this.mainFrame = mainFrame;
+		game = mainFrame.getGame();
+		gameLoader = mainFrame.getGameLoader();
+		constrainsList = gameLoader.getConstrains();
 		houses = new Attribute[game.getHouseCount()][game.getAttributeCount()];
 	}
 
@@ -18,7 +26,7 @@ public class GameState {
 		System.out.println("set: " + houseIndex + ", "
 				+ attr.getAttributeCategory().getName());
 	}
-	
+
 	public Attribute getAttributeAt(int houseIndex, AttributeCategory attrCat) {
 		return houses[houseIndex][attrCat.getIndex()];
 	}
@@ -31,15 +39,16 @@ public class GameState {
 		Constrain[] constrains = game.getConstrains();
 		for (int i = 0; i < constrains.length; ++i) {
 			Constrain.Verdict verdict;
-			
-			System.out.print("constrain[" + i + "]: ");
+
+			System.out.print(constrainsList[i][0] + " " + constrainsList[i][1]
+					+ " " + constrainsList[i][2] + "\t\t");
 
 			verdict = constrains[i].evaluate(this);
 			if (verdict == Constrain.Verdict.CORRECT) {
 				System.out.println("CORRECT");
 			} else if (verdict == Constrain.Verdict.UNKNOWN) {
 				System.out.println("UNKNOWN");
-			} else if (verdict == Constrain.Verdict.INCORRECT){
+			} else if (verdict == Constrain.Verdict.INCORRECT) {
 				System.out.println("INCORRECT");
 			} else {
 				System.out.println("UNKNOWN VERDICT");

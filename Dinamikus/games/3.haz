@@ -8,7 +8,7 @@ Szín Kék Piros Zöld
 Dán = Tea
 Kutya = 2
 Tej = 1
-Zold !<> Kek
-Zold <> Angol
-Kecske = Kek
-Kek != Tej
+Zöld !<> Kék
+Zöld <> Angol
+Kecske = Kék
+Kék != Tej

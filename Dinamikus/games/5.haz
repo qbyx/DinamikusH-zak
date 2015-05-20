@@ -1,7 +1,26 @@
 5
 5
+18
 Nemzetiség Német Angol Svéd Dán Norvég
 Ital Sör Kávé Tej Tea Víz
-Szin Piros Fehér Zöld Kék Szürke
-Autó Audi Traktor Mercedes Subaru BMW
-Állat Kecske Madár Teve Kutya Macska
+Szin Piros Fehér Zöld Kék Sárga
+Autó Audi Traktor Mercedes Subaru Teherautó
+Állat Kecske Madár Hal Kutya Macska
+Norvég = 5
+Kutya = Sör
+Kávé = 1
+Hal <> Kutya
+Kék <> Víz
+Kék = 4
+Teherautó <> Kávé
+Német = 2
+Madár = Sárga
+Zöld != Mercedes
+Macska = Traktor
+Traktor = Víz
+Macska = Víz
+Audi != Piros
+Dán <> Audi
+Piros <> Dán
+Teherautó <> Piros
+Svéd <> Tej

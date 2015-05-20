@@ -51,5 +51,5 @@ public class AttributeBorder extends JPanel {
 		setBorder(new CompoundBorder(new LineBorder(Color.black),
 				new LineBorder(attrCategory.getColor(), THICKNESS)));
 	}
-	
+
 }

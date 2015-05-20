@@ -57,8 +57,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private MainFrame mainFrame;
 
 	private AttributeContent attributesConents[];
-	private int houseCount = 3;
-	private int attributeCount = 4;
+	private int houseCount = 5;
+	private int attributeCount;
+	private Game game;
 	// QQQ
 	private AttributeBorder attributeBorders[];
 
@@ -66,13 +67,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		mainFrame = this;
 		gameLoader = new GameLoader();
 		gameLoader.setGame(houseCount);
-//		attributeCount = gameLoader.getCatNumber();
-
+		// attributeCount = gameLoader.getCatNumber();
+		attributeCount = gameLoader.getAttributeCount();
 		attributesConents = new AttributeContent[attributeCount * houseCount];
 		attributeBorders = new AttributeBorder[attributeCount * houseCount];
-		Game game = new Game(attributeCount, houseCount, gameLoader, null);
+		game = new Game(this);
 
-		gs = new GameState(game);
+		gs = new GameState(this);
 
 		setLayout(new BorderLayout());
 		setSize(1300, 700);
@@ -92,6 +93,38 @@ public class MainFrame extends JFrame implements ActionListener {
 		setVisible(true);
 
 		dropAttributes(game.getAttributes());
+	}
+
+	public int getHouseCount() {
+		return houseCount;
+	}
+
+	public void setHouseCount(int houseCount) {
+		this.houseCount = houseCount;
+	}
+
+	public int getAttributeCount() {
+		return attributeCount;
+	}
+
+	public void setAttributeCount(int attributeCount) {
+		this.attributeCount = attributeCount;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public GameLoader getGameLoader() {
+		return gameLoader;
+	}
+
+	public void setGameLoader(GameLoader gameLoader) {
+		this.gameLoader = gameLoader;
 	}
 
 	public void buildHousePanel(int houseCount,
