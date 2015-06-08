@@ -1,9 +1,9 @@
 package control;
 
-public class Neighbor extends Constrain {
+public class NeighborLeft extends Constrain {
 	private int distance; 
 
-	public Neighbor(Attribute firstAttr, Attribute secondAttr, int distance) {
+	public NeighborLeft(Attribute firstAttr, Attribute secondAttr, int distance) {
 		super(firstAttr, secondAttr);
 		this.distance = distance;
 	}
@@ -17,7 +17,7 @@ public class Neighbor extends Constrain {
 			return Constrain.Verdict.UNKNOWN;
 		}
 
-		if (firstHouseIndex + distance == secondHouseIndex || secondHouseIndex + distance == firstHouseIndex) {
+		if (secondHouseIndex + distance == firstHouseIndex) {
 			return Constrain.Verdict.CORRECT;
 		}
 		else {
