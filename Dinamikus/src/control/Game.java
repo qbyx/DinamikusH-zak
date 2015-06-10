@@ -75,17 +75,46 @@ public class Game {
 			case "<>":
 				constrains[i] = new Neighbor(
 						getAttributeByName(constrainsList[i][0]),
-						getAttributeByName(constrainsList[i][2]));
+						getAttributeByName(constrainsList[i][2]), 1);
 				break;
 			case "!<>":
 				constrains[i] = new Negate(new Neighbor(
 						getAttributeByName(constrainsList[i][0]),
-						getAttributeByName(constrainsList[i][2])));
+						getAttributeByName(constrainsList[i][2]), 1));
+				break;
+			case "<>>":
+				constrains[i] = new NeighborRight(
+						getAttributeByName(constrainsList[i][0]),
+						getAttributeByName(constrainsList[i][2]), 1);
+				break;
+			case "<<>":
+				constrains[i] = new NeighborLeft(
+						getAttributeByName(constrainsList[i][0]),
+						getAttributeByName(constrainsList[i][2]), 1);
+				break;
+			case "<>>>":
+				constrains[i] = new NeighborRight(
+						getAttributeByName(constrainsList[i][0]),
+						getAttributeByName(constrainsList[i][2]), 3);
+				break;
+			case "*":
+				constrains[i] = new MiddlePosition(
+						getAttributeByName(constrainsList[i][0]));
 				break;
 			default:
 				break;
 			}
 		}
+	}
+
+	public int getAttributeIndex(Attribute attr) {
+		for (int i = 0; i < houseCount * attributeCount; ++i) {
+			if (attr == attributes[i]) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 	public Constrain[] getConstrains() {

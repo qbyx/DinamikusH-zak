@@ -1,9 +1,21 @@
 package control;
 
+import gui.AttributeContent;
+
 public class Attribute {
 
 	private String name;
 	private AttributeCategory attributeCategory;
+	// QQQ
+	private AttributeContent attributeContent;
+
+	public AttributeContent getAttributeContent() {
+		return attributeContent;
+	}
+
+	public void setAttributeContent(AttributeContent attributeContent) {
+		this.attributeContent = attributeContent;
+	}
 
 	public AttributeCategory getAttributeCategory() {
 		return attributeCategory;

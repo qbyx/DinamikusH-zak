@@ -32,6 +32,22 @@ public class AttributeContent extends JPanel {
 	private GameState gs;
 	private int hiPlaced;
 	private int catiPlaced;
+	
+	public int getHiPlaced() {
+		return hiPlaced;
+	}
+
+	public void setHiPlaced(int hiPlaced) {
+		this.hiPlaced = hiPlaced;
+	}
+
+	public int getCatiPlaced() {
+		return catiPlaced;
+	}
+
+	public void setCatiPlaced(int catiPlaced) {
+		this.catiPlaced = catiPlaced;
+	}
 
 	public Attribute getAttr() {
 		return attr;
@@ -75,7 +91,7 @@ public class AttributeContent extends JPanel {
 
 		super.paintComponent(g);
 	}
-
+	
 	private void addDragListeners() {
 		addMouseMotionListener(new MouseAdapter() {
 			@Override

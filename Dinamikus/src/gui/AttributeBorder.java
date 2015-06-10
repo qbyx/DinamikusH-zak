@@ -52,4 +52,21 @@ public class AttributeBorder extends JPanel {
 				new LineBorder(attrCategory.getColor(), THICKNESS)));
 	}
 
+	public void loadAttributeContent(AttributeContent ac) {
+		System.out.println("aasdfasdf" + ac);
+		if (ac != null) {
+			ac.setLocation((int) (getLocationOnScreen().getX() - ac.getParent()
+					.getLocationOnScreen().getX()), (int) (getLocationOnScreen()
+							.getY() - ac.getParent().getLocationOnScreen().getY()));
+
+			ac.setHiPlaced(getHouseIndex());
+			ac.setCatiPlaced(ac.getAttr().getAttributeCategory().getIndex());
+			System.out.println(ac.getName());
+		}
+		else {
+			//setVisible(false);
+			System.out.println("null");
+		}
+	}
+
 }

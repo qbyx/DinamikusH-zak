@@ -62,6 +62,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private Game game;
 	// QQQ
 	private AttributeBorder attributeBorders[];
+	private Attribute attrs[];
 
 	public MainFrame() {
 		mainFrame = this;
@@ -93,6 +94,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		setVisible(true);
 
 		dropAttributes(game.getAttributes());
+
+		// QQQ
+		attrs = game.getAttributes();
+		for (int i = 0; i < houseCount * attributeCount; ++i) {
+			System.out.println("asdf; " + attributesConents[i]);
+			attrs[i].setAttributeContent(attributesConents[i]);
+		}
 	}
 
 	public int getHouseCount() {
@@ -165,7 +173,39 @@ public class MainFrame extends JFrame implements ActionListener {
 		});
 		actionPanel.add(b);
 
+		// temp2
+		JButton c = new JButton("solve");
+		c.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent me) {
+				System.out.println("Solve: ...");
+				// gs.Solve();
+				//loadGameState(gs);
+				gs.RecursiveBackTrack(0, 0);
+			}
+		});
+		actionPanel.add(c);
+
 		getContentPane().add(actionPanel, BorderLayout.EAST);
+	}
+
+	public void loadGameState(GameState newGameState) {
+		// ...
+		for (int i = 0; i < newGameState.getGame().getHouseCount(); ++i) {
+			for (AttributeCategory ac : newGameState.getGame()
+					.getAttributeCategories()) {
+				if (newGameState.getAttributeAt(i, ac) != null) {
+					System.out.println("nasdfasdfasdf: "
+							+ newGameState.getAttributeAt(i, ac)
+									.getAttributeContent());
+					attributeBorders[i
+							* newGameState.getGame().getAttributeCount()
+							+ ac.getIndex()].loadAttributeContent(newGameState
+							.getAttributeAt(i, ac).getAttributeContent());
+
+				}
+			}
+		}
 	}
 
 	public void buildAttributePanel() {
